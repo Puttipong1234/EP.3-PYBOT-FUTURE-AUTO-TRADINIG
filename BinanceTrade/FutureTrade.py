@@ -37,77 +37,104 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
 
     current_price = float(get_market_data_by_symbol(symbol)["markPrice"])
 
-    if position == "LONG":
-        act_price_LONG = current_price * (1 + act_price_percent/100)
-        # buy order at market
-        result = request_client.post_order(
-            symbol = symbol ,
-            side = OrderSide.BUY ,
-            positionSide = "BOTH" ,
-            ordertype=OrderType.MARKET ,
-            quantity = amount
-        )
-        
-        # trailing stop loss
-        result = request_client.post_order(
-            symbol = symbol ,
-            side = OrderSide.SELL ,
-            positionSide = "BOTH" ,
-            ordertype = OrderType.TRAILING_STOP_MARKET,
-            activationPrice=act_price_LONG,
-            callbackRate= cb,
-            reduceOnly = True ,
-            quantity = amount
-        )
-        # Initial Stoploss
+    # 50,012.234 -> 0.0024444
 
+    if position == "LONG":
+
+        dec = 5
+        act_price_LONG = current_price * (1 + act_price_percent/100)
         stoplosePrice = current_price * (1 - stoploss_Percent/100)
 
-        result = request_client.post_order(
-            symbol = symbol ,
-            side = OrderSide.SELL ,
-            positionSide = "BOTH" ,
-            ordertype = OrderType.STOP_MARKET,
-            stopPrice = stoplosePrice,
-            reduceOnly=True,
-            quantity = amount
-        )
-    
-    elif position == "SHORT":
-        act_price_SHORT = current_price * (1 - act_price_percent/100)
-        # sell order at market
-        result = request_client.post_order(
-            symbol = symbol ,
-            side = OrderSide.SELL ,
-            positionSide = "BOTH" ,
-            ordertype=OrderType.MARKET ,
-            quantity = amount
-            )
-        
-        # trailing stop loss
-        result = request_client.post_order(
-            symbol = symbol ,
-            side = OrderSide.BUY ,
-            positionSide = "BOTH" ,
-            ordertype = OrderType.TRAILING_STOP_MARKET,
-            activationPrice=act_price_LONG,
-            callbackRate= cb,
-            reduceOnly = True ,
-            quantity = amount
-        )
-        # Initial Stoploss
+        while True:
+            act_price_LONG = "{:0.0{}f}".format(act_price_LONG , dec)
+            stoplosePrice = "{:0.0{}f}".format(stoplosePrice , dec)
+            amount = "{:0.0{}f}".format(amount, dec)
 
+            try:
+                # buy order at market
+                result = request_client.post_order(
+                    symbol = symbol ,
+                    side = OrderSide.BUY ,
+                    positionSide = "BOTH" ,
+                    ordertype=OrderType.MARKET ,
+                    quantity = amount # 0.02 --> 0.019999999
+                )
+            
+            except Exception as e:
+                if e["code"] == -1111:
+                    dec = dec - 1
+                
+            # trailing stop loss
+            result = request_client.post_order(
+                symbol = symbol ,
+                side = OrderSide.SELL ,
+                positionSide = "BOTH" ,
+                ordertype = OrderType.TRAILING_STOP_MARKET,
+                activationPrice=act_price_LONG,
+                callbackRate= cb,
+                reduceOnly = True ,
+                quantity = amount
+            )
+            # Initial Stoploss
+
+            result = request_client.post_order(
+                symbol = symbol ,
+                side = OrderSide.SELL ,
+                positionSide = "BOTH" ,
+                ordertype = OrderType.STOP_MARKET,
+                stopPrice = stoplosePrice,
+                reduceOnly=True,
+                quantity = amount
+            )
+            
+    
+    if position == "SHORT":
+
+        dec = 5
+        act_price_SHORT = current_price * (1 - act_price_percent/100)
         stoplosePrice = current_price * (1 + stoploss_Percent/100)
 
-        result = request_client.post_order(
-            symbol = symbol ,
-            side = OrderSide.BUY ,
-            positionSide = "BOTH" ,
-            ordertype = OrderType.STOP_MARKET,
-            stopPrice = stoplosePrice,
-            reduceOnly=True,
-            quantity = amount
-        )
+        while True:
+            act_price_SHORT = "{:0.0{}f}".format(act_price_SHORT , dec)
+            stoplosePrice = "{:0.0{}f}".format(stoplosePrice , dec)
+            amount = "{:0.0{}f}".format(amount, dec)
+
+            try:
+                # buy order at market
+                result = request_client.post_order(
+                    symbol = symbol ,
+                    side = OrderSide.SELL ,
+                    positionSide = "BOTH" ,
+                    ordertype=OrderType.MARKET ,
+                    quantity = amount # 0.02 --> 0.019999999
+                )
+            
+            except Exception as e:
+                if e["code"] == -1111:
+                    dec = dec - 1
+                
+            # trailing stop loss
+            result = request_client.post_order(
+                symbol = symbol ,
+                side = OrderSide.BUY ,
+                positionSide = "BOTH" ,
+                ordertype = OrderType.TRAILING_STOP_MARKET,
+                activationPrice=act_price_SHORT,
+                callbackRate= cb,
+                reduceOnly = True ,
+                quantity = amount
+            )
+            # Initial Stoploss
+
+            result = request_client.post_order(
+                symbol = symbol ,
+                side = OrderSide.BUY ,
+                positionSide = "BOTH" ,
+                ordertype = OrderType.STOP_MARKET,
+                stopPrice = stoplosePrice,
+                reduceOnly=True,
+                quantity = amount
+            )
 
 def getPositionbySymbol(Symbol):
     result = request_client.get_position_v2()
