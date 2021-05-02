@@ -25,7 +25,7 @@ firebaseConfig = {
 
 firebaseCleint = Firebase(firebaseConfig)
 auth = firebaseCleint.auth()
-user = auth.sign_in_with_email_and_password(os.getenv("FIREBASE_EMAIL_AUTH"), os.getenv("FIREBASE_PASSWORD"))
+user = auth.sign_in_with_email_and_password("pybot@gmail.com", "12345678")
 
 #ทดสอบ
 if __name__ == '__main__':
