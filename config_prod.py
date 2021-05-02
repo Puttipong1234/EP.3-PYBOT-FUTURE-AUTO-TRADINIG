@@ -2,6 +2,11 @@ import os
 API_BINANCE_KEY = os.getenv("API_BINANCE_KEY")
 API_BINANCE_SECRET = os.getenv("API_BINANCE_SECRET")
 
+API_LINE_KEY = os.getenv("API_LINE_KEY")
+API_CLIENT_SECRET = os.getenv("API_CLIENT_SECRET")
+LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
+
+
 from firebase import Firebase
 
 firebaseConfig = {

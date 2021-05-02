@@ -2,6 +2,7 @@ from flask import Flask , request
 import json
 
 from BinanceTrade.Trade import ReceiveSignals
+from line.notify import sendmsg
 
 app = Flask(__name__)
 
@@ -19,7 +20,8 @@ def SIGNALS_RECEIVER():
         # get data firebase เพื่อดูว่า Autotrading = True??
         msg = ReceiveSignals(signal_data_dict = json_msg)
 
-        print(msg)
+        sendmsg(msg=json_msg)
+        sendmsg(msg=msg)
 
         # สร้างฟังก์ชั่น ในการจัดการข้อมูล
 
@@ -38,13 +40,25 @@ def SIGNALS_RECEIVER():
         # """
     return "200"
 
-#Rebalance Sections
+from line.LineBot import handler
 
+@app.route("/linebot", methods=['POST'])
+def callback():
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
 
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
 
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        print("Invalid signature. Please check your channel access token/channel secret.")
+        abort(400)
 
-
-
+    return 'OK'
 
 if __name__== "__main__":
     app.run(debug=True,port=8080)

@@ -39,7 +39,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
 
     current_price = float(get_market_data_by_symbol(symbol)["markPrice"])
 
-    # 50,012.234 -> 0.0024444
+    # 50,012.234 -> 0.0024444 -> [0,0024444]
     amount = round(amount * lev /current_price,3)
 
     if position == "LONG":
