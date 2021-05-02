@@ -40,6 +40,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
     current_price = float(get_market_data_by_symbol(symbol)["markPrice"])
 
     # 50,012.234 -> 0.0024444
+    amount = float(amount/current_price)
 
     if position == "LONG":
 
@@ -50,7 +51,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
         while True:
             act_price_LONG = round(act_price_LONG,2)
             stoplosePrice = "{:0.0{}f}".format(stoplosePrice, 2)
-            amount = "{:0.0{}f}".format(amount, 3) #1000/50000 => 
+            amount = "{:0.0{}f}".format(amount, 4) #1000/50000 => 
 
             try:
                 # buy order at market
@@ -99,7 +100,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
         while True:
             act_price_LONG = round(act_price_LONG,2)
             stoplosePrice = "{:0.0{}f}".format(stoplosePrice, 2)
-            amount = "{:0.0{}f}".format(amount, 3) #1000/50000 => 
+            amount = "{:0.0{}f}".format(amount, 4) #1000/50000 => 
 
             try:
                 # buy order at market

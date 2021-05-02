@@ -1,4 +1,5 @@
 from binance.client import Client
+from BinanceTrade.FutureTrade import *
 
 try : 
     from config_dev import API_BINANCE_KEY , API_BINANCE_SECRET
@@ -31,21 +32,11 @@ def ReceiveSignals(signal_data_dict):
     msg = ""
 
     if Signal_Type == "OPEN":
-        if Signal_Side == "LONG":
-            # function make order --> (Open,Long,symbol)
-            print("open order long")
-        
-        elif Signal_Side == "SHORT":
-            # function make order --> (Open,Short,symbol)
-            print("open order short")
+        PlaceOrderAtMarket(position=Signal_Side, symbol=Signal_Symbol, amount=20)
+        msg = "ทำการ {} Position ในฝั่ง {} คู่สินค้า {} ".format(Signal_Type,Signal_Side,Signal_Symbol)
     
     elif Signal_Type == "CLOSE":
-        if Signal_Side == "LONG":
-            # function make order --> (close,Long,symbol)
-            print("close order long")
-        
-        elif Signal_Side == "SHORT":
-            # function make order --> (close,Short,symbol)
-            print("close order short")
+        ClosePositionAtMarket(symbol=Signal_Symbol, positionSide=Signal_Side)
+        msg = "ทำการ {} Position ในฝั่ง {} คู่สินค้า {} ".format(Signal_Type,Signal_Side,Signal_Symbol)
     
     return msg
