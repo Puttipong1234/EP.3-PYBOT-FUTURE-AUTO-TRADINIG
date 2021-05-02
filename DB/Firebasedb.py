@@ -1,17 +1,17 @@
 try:
-    from config_dev import firebaseCleint , user , auth
+    from config_dev import firebaseCleint
 
 except:
-    from config_prod import firebaseCleint , user , auth
+    from config_prod import firebaseCleint
 
 db = firebaseCleint.database()
 
 def WriteInitialValue(symbols,initialvalue):
     
 
-    user_n = auth.refresh(user['refreshToken'])
+    # user_n = auth.refresh(user['refreshToken'])
     data = { "initialValue" : initialvalue }
-    db.child(symbols).update(data,user_n['idToken'])
+    db.child(symbols).update(data)
 
 def GetInitialValue(symbols):
 
@@ -22,27 +22,25 @@ def GetInitialValue(symbols):
     
     # Value เริ่มต้น
     try:
-        res = db.get(user_n['idToken']).val()[symbols]["initialValue"]
+        res = db.get().val()[symbols]["initialValue"]
         return res
     
     except KeyError:
         WriteInitialValue(symbols=symbols,initialvalue=0)
-        res = db.get(user_n['idToken']).val()[symbols]["initialValue"]
+        res = db.get().val()[symbols]["initialValue"]
         return res
     
 
 def UpdateBotSetting(key,value):
 
-    user_n = auth.refresh(user['refreshToken'])
-
     if key == "run":
         data = { "run" : value}
-        db.child("BOTSETTINGS").update(data,user_n['idToken'])
+        db.child("BOTSETTINGS").update(data)
     
     elif key == "Positionsize":
         data = { "Positionsize" : value}
-        db.child("BOTSETTINGS").update(data,user_n['idToken'])
+        db.child("BOTSETTINGS").update(data)
 
 def GetDataBotsetting(key):
-    res = db.get(user_n['idToken']).val()["BOTSETTINGS"][key]
+    res = db.get().val()["BOTSETTINGS"][key]
     return res
