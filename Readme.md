@@ -7,6 +7,6 @@
 
 * python app.py สามารถทำตามเนื้อหาได้เลย
 
-## References
+## References - 
 * binance API : https://python-binance.readthedocs.io/en/latest/
 * Firebase : https://pypi.org/project/firebase/
