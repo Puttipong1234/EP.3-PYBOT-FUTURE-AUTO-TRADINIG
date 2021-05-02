@@ -29,7 +29,7 @@ def getAssetUSDT():
     return int(result[1].balance)
 
 
-def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_Percent = 5):
+def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_Percent = 5,lev=5):
     """
     position : Long or Short
     amount : จำนวนสินค้า ที่ต้องการซื้อ
@@ -40,7 +40,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
     current_price = float(get_market_data_by_symbol(symbol)["markPrice"])
 
     # 50,012.234 -> 0.0024444
-    amount = float(amount/current_price)
+    amount = round(amount * lev /current_price,3)
 
     if position == "LONG":
 

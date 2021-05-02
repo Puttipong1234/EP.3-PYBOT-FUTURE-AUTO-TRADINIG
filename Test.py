@@ -1,6 +1,13 @@
 from BinanceTrade.FutureTrade import *
+from BinanceTrade.Trade import ReceiveSignals
 
 if __name__ == "__main__":
+    data = {
+        "message" : "CLOSE LONG",
+        "symbol" : "BTCUSDT"
+        }
+    msg = ReceiveSignals(signal_data_dict= data )
+
     # res = get_market_data_by_symbol(symbol = "BTCUSDT")
     # print(res["markPrice"])
 

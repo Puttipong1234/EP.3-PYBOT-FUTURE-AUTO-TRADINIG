@@ -8,12 +8,6 @@ except Exception:
 
 client = Client( API_BINANCE_KEY , API_BINANCE_SECRET )
 
-def BUY(symbol,position_size):
-    pass
-
-def SELL(symbol,position_size=0,sell_all=True):
-    pass
-
 def ReceiveSignals(signal_data_dict):
 
     """
@@ -32,7 +26,7 @@ def ReceiveSignals(signal_data_dict):
     msg = ""
 
     if Signal_Type == "OPEN":
-        PlaceOrderAtMarket(position=Signal_Side, symbol=Signal_Symbol, amount=20)
+        PlaceOrderAtMarket(position=Signal_Side, symbol=Signal_Symbol, amount=20, lev = 5)
         msg = "ทำการ {} Position ในฝั่ง {} คู่สินค้า {} ".format(Signal_Type,Signal_Side,Signal_Symbol)
     
     elif Signal_Type == "CLOSE":
