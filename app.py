@@ -3,6 +3,7 @@ import json
 
 from BinanceTrade.Trade import ReceiveSignals
 from line.notify import sendmsg
+from DB.Firebasedb import GetDataBotsetting
 
 app = Flask(__name__)
 
@@ -17,8 +18,9 @@ def SIGNALS_RECEIVER():
         json_msg = json.loads(msg)
         print(json_msg) # <-- dictionary
 
-        # get data firebase เพื่อดูว่า Autotrading = True??
-        msg = ReceiveSignals(signal_data_dict = json_msg)
+        if GetDataBotsetting(key="run") == True:
+            # get data firebase เพื่อดูว่า Autotrading = True??
+            msg = ReceiveSignals(signal_data_dict = json_msg)
 
         sendmsg(msg=json_msg)
         sendmsg(msg=msg)
