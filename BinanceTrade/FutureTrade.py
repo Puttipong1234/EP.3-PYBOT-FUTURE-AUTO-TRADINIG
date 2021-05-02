@@ -3,8 +3,10 @@ from binance_f.constant.test import *
 from binance_f.base.printobject import *
 from binance_f.model.constant import *
 
-
-from config_dev import API_BINANCE_KEY , API_BINANCE_SECRET
+try:
+    from config_dev import API_BINANCE_KEY , API_BINANCE_SECRET
+except:
+    from config_prod import API_BINANCE_KEY , API_BINANCE_SECRET
 
 request_client = RequestClient(api_key=API_BINANCE_KEY,secret_key=API_BINANCE_SECRET)
 
@@ -41,14 +43,14 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
 
     if position == "LONG":
 
-        dec = 5
-        act_price_LONG = current_price * (1 + act_price_percent/100)
-        stoplosePrice = current_price * (1 - stoploss_Percent/100)
+        dec = 2
+        act_price_LONG = float(current_price * (1 + act_price_percent/100))
+        stoplosePrice = float(current_price * (1 - stoploss_Percent/100))
 
         while True:
-            act_price_LONG = "{:0.0{}f}".format(act_price_LONG , dec)
-            stoplosePrice = "{:0.0{}f}".format(stoplosePrice , dec)
-            amount = "{:0.0{}f}".format(amount, dec)
+            act_price_LONG = round(act_price_LONG,2)
+            stoplosePrice = "{:0.0{}f}".format(stoplosePrice, 2)
+            amount = "{:0.0{}f}".format(amount, 3) #1000/50000 => 
 
             try:
                 # buy order at market
@@ -61,7 +63,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                 )
             
             except Exception as e:
-                if e["code"] == -1111:
+                if e.code == -1111:
                     dec = dec - 1
                 
             # trailing stop loss
@@ -82,7 +84,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                 side = OrderSide.SELL ,
                 positionSide = "BOTH" ,
                 ordertype = OrderType.STOP_MARKET,
-                stopPrice = stoplosePrice,
+                stopPrice = str(stoplosePrice),
                 reduceOnly=True,
                 quantity = amount
             )
@@ -90,14 +92,14 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
     
     if position == "SHORT":
 
-        dec = 5
-        act_price_SHORT = current_price * (1 - act_price_percent/100)
-        stoplosePrice = current_price * (1 + stoploss_Percent/100)
+        dec = 2
+        act_price_LONG = float(current_price * (1 - act_price_percent/100))
+        stoplosePrice = float(current_price * (1 + stoploss_Percent/100))
 
         while True:
-            act_price_SHORT = "{:0.0{}f}".format(act_price_SHORT , dec)
-            stoplosePrice = "{:0.0{}f}".format(stoplosePrice , dec)
-            amount = "{:0.0{}f}".format(amount, dec)
+            act_price_LONG = round(act_price_LONG,2)
+            stoplosePrice = "{:0.0{}f}".format(stoplosePrice, 2)
+            amount = "{:0.0{}f}".format(amount, 3) #1000/50000 => 
 
             try:
                 # buy order at market
@@ -110,7 +112,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                 )
             
             except Exception as e:
-                if e["code"] == -1111:
+                if e.code == -1111:
                     dec = dec - 1
                 
             # trailing stop loss
@@ -119,7 +121,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                 side = OrderSide.BUY ,
                 positionSide = "BOTH" ,
                 ordertype = OrderType.TRAILING_STOP_MARKET,
-                activationPrice=act_price_SHORT,
+                activationPrice=act_price_LONG,
                 callbackRate= cb,
                 reduceOnly = True ,
                 quantity = amount

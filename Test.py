@@ -9,11 +9,11 @@ if __name__ == "__main__":
     # balance = getAssetUSDT()
     # print(balance)
 
-    PlaceOrderAtMarket(
-        position='LONG',
-        symbol='BTCUSDT',
-        amount=0.002
-    )
+    # PlaceOrderAtMarket(
+    #     position='LONG',
+    #     symbol='BTCUSDT',
+    #     amount=0.002
+    # )
 
     # res = getPositionbySymbol(Symbol="BTCUSDT")
     # print(res['positionAmt'])
