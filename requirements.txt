@@ -2,7 +2,7 @@ aiohttp==3.7.4.post0
 APScheduler==3.7.0
 async-timeout==3.0.1
 attrs==20.3.0
-binance-futures @ file:///C:/Users/disen/OneDrive/Desktop/PYBOTT%20-%20FUTURE%20BOT%20TRADE/FUTURE%20-%20BOT/binance_futures-1.1.0-py3-none-any.whl
+binance_futures-1.1.0-py3-none-any.whl
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
