@@ -48,6 +48,8 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
         act_price_LONG = float(current_price * (1 + act_price_percent/100))
         stoplosePrice = float(current_price * (1 - stoploss_Percent/100))
 
+        # While loop เนื่องจาก เราจะต้องทำคำสั่งจนกว่าจะสำเร็จ ซึ่งสินค้าแต่ละประเภทอาจมี ทศนิยม ที่ต่างกัน
+        # แอดมินแนะนำให้ทำแบบ การซื้อขาย Course 2 ที่สอนไปนะครับ แยกจำนวนเต็ม และ ทศนิยม แล้ว ค่อยๆตัดทศนิยม
         while True:
             act_price_LONG = round(act_price_LONG,2)
             stoplosePrice = "{:0.0{}f}".format(stoplosePrice, 2)
@@ -100,6 +102,8 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
         act_price_LONG = float(current_price * (1 - act_price_percent/100))
         stoplosePrice = float(current_price * (1 + stoploss_Percent/100))
 
+        # While loop เนื่องจาก เราจะต้องทำคำสั่งจนกว่าจะสำเร็จ ซึ่งสินค้าแต่ละประเภทอาจมี ทศนิยม ที่ต่างกัน
+        # แอดมินแนะนำให้ทำแบบ การซื้อขาย Course 2 ที่สอนไปนะครับ แยกจำนวนเต็ม และ ทศนิยม แล้ว ค่อยๆตัดทศนิยม
         while True:
             act_price_LONG = round(act_price_LONG,2)
             stoplosePrice = "{:0.0{}f}".format(stoplosePrice, 2)
