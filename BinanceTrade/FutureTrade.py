@@ -62,33 +62,36 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                     ordertype=OrderType.MARKET ,
                     quantity = amount # 0.02 --> 0.019999999
                 )
+
+                # break ออกจาก loop ถ้าหาก เนื่องจากทำคำสั่งสำเร็จ
+                break
             
             except Exception as e:
                 if e.code == -1111:
                     dec = dec - 1
                 
-            # trailing stop loss
-            result = request_client.post_order(
-                symbol = symbol ,
-                side = OrderSide.SELL ,
-                positionSide = "BOTH" ,
-                ordertype = OrderType.TRAILING_STOP_MARKET,
-                activationPrice=act_price_LONG,
-                callbackRate= cb,
-                reduceOnly = True ,
-                quantity = amount
-            )
-            # Initial Stoploss
+        # trailing stop loss
+        result = request_client.post_order(
+            symbol = symbol ,
+            side = OrderSide.SELL ,
+            positionSide = "BOTH" ,
+            ordertype = OrderType.TRAILING_STOP_MARKET,
+            activationPrice=act_price_LONG,
+            callbackRate= cb,
+            reduceOnly = True ,
+            quantity = amount
+        )
+        # Initial Stoploss
 
-            result = request_client.post_order(
-                symbol = symbol ,
-                side = OrderSide.SELL ,
-                positionSide = "BOTH" ,
-                ordertype = OrderType.STOP_MARKET,
-                stopPrice = str(stoplosePrice),
-                reduceOnly=True,
-                quantity = amount
-            )
+        result = request_client.post_order(
+            symbol = symbol ,
+            side = OrderSide.SELL ,
+            positionSide = "BOTH" ,
+            ordertype = OrderType.STOP_MARKET,
+            stopPrice = str(stoplosePrice),
+            reduceOnly=True,
+            quantity = amount
+        )
             
     
     if position == "SHORT":
@@ -111,33 +114,36 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                     ordertype=OrderType.MARKET ,
                     quantity = amount # 0.02 --> 0.019999999
                 )
+
+                # break ออกจาก loop ถ้าหาก เนื่องจากทำคำสั่งสำเร็จ
+                break
             
             except Exception as e:
                 if e.code == -1111:
                     dec = dec - 1
                 
-            # trailing stop loss
-            result = request_client.post_order(
-                symbol = symbol ,
-                side = OrderSide.BUY ,
-                positionSide = "BOTH" ,
-                ordertype = OrderType.TRAILING_STOP_MARKET,
-                activationPrice=act_price_LONG,
-                callbackRate= cb,
-                reduceOnly = True ,
-                quantity = amount
-            )
-            # Initial Stoploss
+        # trailing stop loss
+        result = request_client.post_order(
+            symbol = symbol ,
+            side = OrderSide.BUY ,
+            positionSide = "BOTH" ,
+            ordertype = OrderType.TRAILING_STOP_MARKET,
+            activationPrice=act_price_LONG,
+            callbackRate= cb,
+            reduceOnly = True ,
+            quantity = amount
+        )
+        # Initial Stoploss
 
-            result = request_client.post_order(
-                symbol = symbol ,
-                side = OrderSide.BUY ,
-                positionSide = "BOTH" ,
-                ordertype = OrderType.STOP_MARKET,
-                stopPrice = stoplosePrice,
-                reduceOnly=True,
-                quantity = amount
-            )
+        result = request_client.post_order(
+            symbol = symbol ,
+            side = OrderSide.BUY ,
+            positionSide = "BOTH" ,
+            ordertype = OrderType.STOP_MARKET,
+            stopPrice = stoplosePrice,
+            reduceOnly=True,
+            quantity = amount
+        )
 
 def getPositionbySymbol(Symbol):
     result = request_client.get_position_v2()
