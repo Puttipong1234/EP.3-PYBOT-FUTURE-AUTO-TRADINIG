@@ -69,8 +69,9 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                 break
             
             except Exception as e: # ตรวจจับว่า เป้นกรณี code -1111 คือ ทศนิยมผิดพลาดหรือไม่ ลองไปทดสอบดูนะครับ
-                if e.code == -1111:
-                    dec = dec - 1
+                # if e.code == -1111: 
+                # ลอง print(e) แล้วเช็คกรณี error code -1111 นะครับ
+                dec = dec - 1
                 
         # trailing stop loss ควรทำแบบ While loop ด้านบนเช่นกัน
         result = request_client.post_order(
@@ -123,8 +124,9 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                 break
             
             except Exception as e: # ตรวจจับว่า เป้นกรณี code -1111 คือ ทศนิยมผิดพลาดหรือไม่ ลองไปทดสอบดูนะครับ
-                if e.code == -1111:
-                    dec = dec - 1
+                # if e.code == -1111:
+                # ลอง print(e) แล้วเช็คกรณี error code -1111 นะครับ
+                dec = dec - 1
                 
         # trailing stop loss ควรทำแบบ While loop ด้านบนเช่นกัน
         result = request_client.post_order(
