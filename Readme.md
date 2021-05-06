@@ -18,3 +18,5 @@
 ## References - 
 * binance API : https://python-binance.readthedocs.io/en/latest/
 * Firebase : https://pypi.org/project/firebase/
+* binance Future Ref : https://binance-docs.github.io/apidocs/futures/en/#change-log
+* binance Future SDK python with Example : https://github.com/Binance-docs/Binance_Futures_python
