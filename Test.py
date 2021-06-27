@@ -21,8 +21,8 @@ if __name__ == "__main__":
     # print(balance)
 
     PlaceOrderAtMarket(
-        position='LONG',
-        symbol='1000SHIBUSDT',
+        position='SHORT',
+        symbol='SOLUSDT', # 0.000....
         amount=15,
     )
 

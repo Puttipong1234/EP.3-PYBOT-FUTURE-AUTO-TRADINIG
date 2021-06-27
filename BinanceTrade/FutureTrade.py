@@ -3,7 +3,7 @@ from binance_f.constant.test import *
 from binance_f.base.printobject import *
 from binance_f.model.constant import *
 
-import math
+import math #< แก้ไข 6-27-2021
 
 try:
     from config_dev import API_BINANCE_KEY , API_BINANCE_SECRET
@@ -12,12 +12,17 @@ except:
 
 request_client = RequestClient(api_key=API_BINANCE_KEY,secret_key=API_BINANCE_SECRET)
 
+size_precision = {
+    "BTC" : 3,
+    "BNB": 2,
+    "SOL": 0
+}
 
-def round_down(num,digits):
+def round_down(num,digits): #< แก้ไข เพิ่ม function 6-27-2021
     factor = 10.0 ** digits
     return math.floor(num * factor) / factor
 
-def calForPosition(price,tp,sl,side,amount_usdt):
+def calForPosition(price,tp,sl,side,amount_usdt): #< แก้ไข เพิ่ม function 6-27-2021
 
     """
     side : LONG or SHORT
@@ -50,11 +55,11 @@ def calForPosition(price,tp,sl,side,amount_usdt):
     size = amount_usdt/float(price)
     if float(price) > 1000:
         size = round_down(size,3)
-    elif 10 < float(price) < 1000:
+    elif 200 < float(price) < 1000:
         size = round_down(size,2)
-    elif 1 <= float(price) <= 10:
+    elif 50 < float(price) < 200:
         size = round_down(size,1)
-    elif 0 < float(price) < 1:
+    elif 0 < float(price) <= 50:
         size = int(size)
         
     return tp_price , sl_price , size
@@ -77,7 +82,7 @@ def getAssetUSDT():
     result = request_client.get_balance()
     return int(result[1].balance)
 
-
+#< แก้ไข เพิ่ม function 6-27-2021
 def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_Percent = 5,lev=10):
     """
     UPDATE LOGIC 6-27-2021 (ดูวิดิโอในกลุ่ม)
@@ -99,6 +104,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
                                                     amount_usdt=amount
                                                 )
         
+        # เปิด position
         try:
             result = request_client.post_order(
                 symbol = symbol ,
@@ -111,7 +117,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
             print(e.error_message)
 
 
-
+        # order trail stop
         try:
             result = request_client.post_order(
                 symbol = symbol ,
@@ -126,6 +132,7 @@ def PlaceOrderAtMarket(position,symbol,amount,act_price_percent=2,cb=3,stoploss_
         except Exception as e:
             print(e.error_message)
         
+        # order stop loss
         try:
             result = request_client.post_order(
                 symbol = symbol ,

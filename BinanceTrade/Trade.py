@@ -28,7 +28,7 @@ def ReceiveSignals(signal_data_dict):
     msg = ""
 
     # ให้เป็น USDT 
-    amount = float(GetDataBotsetting(key="Positionsize"))
+    amount = float(GetDataBotsetting(key="Positionsize")) # 100 usd
 
     if Signal_Type == "OPEN":
         PlaceOrderAtMarket(position=Signal_Side, symbol=Signal_Symbol, amount=amount, lev = 5)
