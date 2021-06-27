@@ -21,7 +21,7 @@ firebaseConfig = {
     "appId": "1:966280251835:web:a9ceef709f806fee8cdc9e",
     "measurementId": "G-KN2EG9DBH4",
     "databaseURL": os.getenv("FIREBASE_DB_URL"),
-    "serviceAccount": "นำไฟล์ของท่านมาใส่เองด้วย" # นำไฟล์ของท่านมาใส่เองด้วย
+    "serviceAccount": "pybot-bottrade-firebase-adminsdk-9em5u-3f01ebd736.json" # นำไฟล์ของท่านมาใส่เองด้วย
   }
 
 firebaseCleint = Firebase(firebaseConfig)

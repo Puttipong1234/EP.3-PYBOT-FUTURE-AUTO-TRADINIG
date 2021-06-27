@@ -27,6 +27,7 @@ def ReceiveSignals(signal_data_dict):
 
     msg = ""
 
+    # ให้เป็น USDT 
     amount = float(GetDataBotsetting(key="Positionsize"))
 
     if Signal_Type == "OPEN":

@@ -8,8 +8,8 @@ if __name__ == "__main__":
     #     }
     # msg = ReceiveSignals(signal_data_dict= data )
 
-    from line.notify import notify
-    notify.send("TEST")
+    # from line.notify import notify
+    # notify.send("TEST")
 
 
     # res = get_market_data_by_symbol(symbol = "BTCUSDT")
@@ -20,11 +20,11 @@ if __name__ == "__main__":
     # balance = getAssetUSDT()
     # print(balance)
 
-    # PlaceOrderAtMarket(
-    #     position='LONG',
-    #     symbol='BTCUSDT',
-    #     amount=0.002
-    # )
+    PlaceOrderAtMarket(
+        position='LONG',
+        symbol='1000SHIBUSDT',
+        amount=15,
+    )
 
     # res = getPositionbySymbol(Symbol="BTCUSDT")
     # print(res['positionAmt'])
